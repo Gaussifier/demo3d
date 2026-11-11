@@ -1,0 +1,300 @@
+{
+  "schema_version": 2,
+  "kind": "planar",
+  "gradient_input": false,
+  "meta": {
+    "iterations": 7,
+    "budget_scale": 1.0,
+    "points_per_pixel_max": 0.4,
+    "render_n_max": 1000000
+  },
+  "geometry": {
+    "size_multiple": 16,
+    "short_side": 512,
+    "max_side": 1024,
+    "thickness_px": 10.0,
+    "camera_distance": 1.0,
+    "near_factor": 0.02,
+    "far_factor": 100.0,
+    "gradient_view_tilt_deg": 30.0,
+    "gradient_view_azimuth_deg": 0.0
+  },
+  "reference_cameras": {
+    "size": [
+      512,
+      768
+    ],
+    "frontal": {
+      "w2c": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position": [
+        -0.0,
+        -0.0,
+        -1.0
+      ],
+      "width": 768,
+      "height": 512,
+      "focal_x": 512.0,
+      "focal_y": 512.0,
+      "center_x": 384.0,
+      "center_y": 256.0,
+      "near": 0.02,
+      "far": 100.0
+    },
+    "gradient_view": {
+      "w2c": [
+        0.8660253882408142,
+        -0.0,
+        0.5,
+        -0.0,
+        0.0,
+        1.0,
+        0.0,
+        -0.0,
+        -0.5,
+        0.0,
+        0.8660253882408142,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "position": [
+        0.5,
+        -0.0,
+        -0.8660253882408142
+      ],
+      "width": 768,
+      "height": 512,
+      "focal_x": 512.0,
+      "focal_y": 512.0,
+      "center_x": 384.0,
+      "center_y": 256.0,
+      "near": 0.02,
+      "far": 100.0
+    }
+  },
+  "graphs": {
+    "forward_map": {
+      "path": "forward_map.onnx",
+      "sha256": "f9735b7deacb7961cff9dbdd763bc56ef6a07a593b6c12df6ebc5d9308ba5b1f",
+      "bytes": 8316472,
+      "inputs": [
+        "image"
+      ],
+      "outputs": [
+        "rate_sum",
+        "density",
+        "log_cov",
+        "rgb",
+        "depth",
+        "opacity",
+        "normal"
+      ],
+      "max_rel_diff": {
+        "512x768": {
+          "rate_sum": 5.1300533837563646e-05,
+          "density": 5.114512800826992e-05,
+          "log_cov": 5.591274621440959e-05,
+          "rgb": 6.115436553955078e-05,
+          "depth": 0.0002034306526184082,
+          "opacity": 8.151332579616887e-05,
+          "normal": 0.00020621633385592506
+        },
+        "512x512": {
+          "rate_sum": 2.642955686004073e-05,
+          "density": 2.4889167106405128e-05,
+          "log_cov": 3.1003585009859966e-05,
+          "rgb": 3.0159950256347656e-05,
+          "depth": 8.156895637512207e-05,
+          "opacity": 4.03024487562356e-05,
+          "normal": 7.861431604780017e-05
+        },
+        "384x640": {
+          "rate_sum": 3.4007478573642976e-05,
+          "density": 1.6543730856940584e-05,
+          "log_cov": 4.3406005773106335e-05,
+          "rgb": 3.2842159271240234e-05,
+          "depth": 9.964406490325928e-05,
+          "opacity": 6.109068925138962e-05,
+          "normal": 0.00010805929301696429
+        }
+      }
+    },
+    "setup": {
+      "path": "setup.onnx",
+      "sha256": "685d2cd2253a348deed926eee01ce8d9af56592b264d3dc4aa821bf6500d2eb7",
+      "bytes": 9397,
+      "inputs": [
+        "image",
+        "density",
+        "log_cov",
+        "rgb",
+        "depth",
+        "opacity",
+        "normal",
+        "points",
+        "weights"
+      ],
+      "outputs": [
+        "state",
+        "log_weights",
+        "footprint",
+        "constant",
+        "extra"
+      ],
+      "max_rel_diff": {
+        "512x768": {
+          "state": 5.410812839240082e-05,
+          "log_weights": 5.960464477539063e-08,
+          "footprint": 1.8270910698933677e-05,
+          "constant": 4.75326468478345e-08,
+          "extra": 9.170090319887596e-08
+        },
+        "512x512": {
+          "state": 1.25893925555145e-07,
+          "log_weights": 5.960464477539063e-08,
+          "footprint": 1.8467002421393358e-07,
+          "constant": 5.968625205372932e-08,
+          "extra": 9.048570828004857e-08
+        },
+        "384x640": {
+          "state": 0.00010145007863860438,
+          "log_weights": 5.960464477539063e-08,
+          "footprint": 2.7543462890067514e-05,
+          "constant": 5.6080443582849435e-08,
+          "extra": 9.372283795002661e-08
+        }
+      }
+    },
+    "pre_render": {
+      "path": "pre_render.onnx",
+      "sha256": "908e828dd85b17896baf7b9190064985f67e946175abe4bbee7104a565f83ae2",
+      "bytes": 23630,
+      "inputs": [
+        "geom",
+        "state",
+        "log_weights"
+      ],
+      "outputs": [
+        "means",
+        "log_scales",
+        "quats",
+        "opacity_logits",
+        "sh0",
+        "depth_sh0"
+      ],
+      "max_rel_diff": {
+        "512x768": {
+          "means": 1.862645149230957e-09,
+          "log_scales": 7.932518392932188e-05,
+          "quats": 8.344650268554688e-07,
+          "opacity_logits": 0.0,
+          "sh0": 0.0,
+          "depth_sh0": 2.690265677186951e-07
+        },
+        "512x512": {
+          "means": 1.862645149230957e-09,
+          "log_scales": 3.0206489909873765e-05,
+          "quats": 8.642673492431641e-07,
+          "opacity_logits": 0.0,
+          "sh0": 0.0,
+          "depth_sh0": 2.690265677186951e-07
+        },
+        "384x640": {
+          "means": 1.862645149230957e-09,
+          "log_scales": 0.0001800534280294839,
+          "quats": 2.980232238769531e-07,
+          "opacity_logits": 0.0,
+          "sh0": 0.0,
+          "depth_sh0": 2.690265677186951e-07
+        }
+      }
+    },
+    "head": {
+      "path": "head.onnx",
+      "sha256": "4eeca96ebd6534d00545cc873db390e89459a405876558e33a6b0de14cad1d9c",
+      "bytes": 3066540,
+      "inputs": [
+        "constant",
+        "extra",
+        "image",
+        "render",
+        "depth_render",
+        "hard_count"
+      ],
+      "outputs": [
+        "features"
+      ],
+      "max_rel_diff": {
+        "512x768": {
+          "features": 0.00015774369454592848
+        },
+        "512x512": {
+          "features": 7.181581854217426e-05
+        },
+        "384x640": {
+          "features": 6.409976172940088e-05
+        }
+      }
+    },
+    "update": {
+      "path": "update.onnx",
+      "sha256": "d695b028e678727caef497fe7d56dba685e6a68d7d188e4c50f265d23dab032c",
+      "bytes": 1459268,
+      "inputs": [
+        "geom",
+        "features",
+        "hard_count",
+        "state",
+        "footprint"
+      ],
+      "outputs": [
+        "state_next"
+      ],
+      "max_rel_diff": {
+        "512x768": {
+          "state_next": 5.180796274872327e-06
+        },
+        "512x512": {
+          "state_next": 2.381160890014443e-06
+        },
+        "384x640": {
+          "state_next": 1.2148937740125986e-05
+        }
+      }
+    }
+  },
+  "placement": {
+    "kind": "emv",
+    "seed": 0
+  },
+  "sampler": {
+    "oversample": 1.5,
+    "merge_rounds": 6,
+    "per_round_fraction": 0.3333333333333333,
+    "knn_k": 8,
+    "lloyd_iters": 3,
+    "tile_cap": 32
+  },
+  "final": {
+    "tie_break_rel_step": 1e-06
+  }
+}
